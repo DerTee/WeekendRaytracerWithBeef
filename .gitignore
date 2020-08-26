@@ -1,0 +1,16 @@
+#Ignore thumbnails created by Windows
+Thumbs.db
+
+*.obj
+*.exe
+*.pdb
+*.log
+[Bb]in
+[Dd]ebug*/
+*.lib
+*.sbr
+obj/
+[Rr]elease*/
+
+BeefSpace_User.toml
+*.ppm
