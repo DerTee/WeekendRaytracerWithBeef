@@ -8,15 +8,12 @@ namespace RayTracingInOneWeekendWithBeef
 
 		public this()
 		{
-			for(int i = 0; i < e.Count; i++) {
-				e[i] = 0.0;
-			}
+			e = .(0.0, 0.0, 0.0);
 		}
 
-		public this(double e0, double e1, double e2) {
-			e[0] = e0;
-			e[1] = e1;
-			e[2] = e2;
+		public this(double e0, double e1, double e2)
+		{
+			e = .(e0, e1, e2);
 		}
 
 		// override for [] operator seems to work differently than the others
