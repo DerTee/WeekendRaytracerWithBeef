@@ -147,7 +147,7 @@ namespace RayTracingInOneWeekendWithBeef
 		}
 
 		[Inline]
-		public Vec3 unit_vector(Vec3 v)
+		public static Vec3 unit_vector(Vec3 v)
 		{
 			return v / v.length();
 		}
