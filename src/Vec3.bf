@@ -87,11 +87,29 @@ namespace RayTracingInOneWeekendWithBeef
 			return e[0]*e[0] + e[1]*e[1] + e[2]*e[2];
 		}
 
-		public String ToString()
-		{
-			return new String("{} {} {}", e[0], e[1], e[2]);
+		public static Vec3 operator +(Vec3 lhs, Vec3 rhs) {
+			return new Vec3(lhs[0] + rhs[0], lhs[1] + rhs[1], lhs[2] + rhs[2]);
 		}
 
+		public static Vec3 operator -(Vec3 lhs, Vec3 rhs) {
+			return new Vec3(lhs[0] - rhs[0], lhs[1] - rhs[1], lhs[2] - rhs[2]);
+		}
+
+		public static Vec3 operator *(Vec3 lhs, Vec3 rhs) {
+			return new Vec3(lhs[0] * rhs[0], lhs[1] * rhs[1], lhs[2] * rhs[2]);
+		}
+
+		public static Vec3 operator *(double t, Vec3 v) {
+			return new Vec3(v[0] * t, v[1] * t, v[2] * t);
+		}
+
+		public static Vec3 operator *(Vec3 v, double t) {
+			return new Vec3(v[0] * t, v[1] * t, v[2] * t);
+		}
+
+		public static Vec3 operator /(Vec3 v, double t) {
+			return (1/t) * v;
+		}
 	}
 
 	typealias Color = Vec3;
