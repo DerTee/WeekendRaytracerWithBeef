@@ -125,6 +125,10 @@ namespace RayTracingInOneWeekendWithBeef
 		public static Vec3 operator /(Vec3 v, double t) {
 			return (1/t) * v;
 		}
+
+		public override void ToString(String strbuffer) {
+			strbuffer.AppendF("{} {} {}", e[0], e[1], e[2]);
+		}
 	}
 
 	typealias Color = Vec3;

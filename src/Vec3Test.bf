@@ -89,5 +89,15 @@ namespace RayTracingInOneWeekendWithBeef
 			Test.Assert(v[1] === 0.0);
 			Test.Assert(v[2] === 15.0);
 		}
+
+		[Test]
+		public static void TestToString()
+		{
+			let v = scope Vec3(2.125, 0.0, 5.25);
+			var str = scope String();
+			v.ToString(str);
+
+			Test.Assert(str == "2.125 0 5.25");
+		}
 	}
 }
