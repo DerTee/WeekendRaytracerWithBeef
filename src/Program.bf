@@ -15,6 +15,8 @@ namespace RayTracingInOneWeekendWithBeef
 
 			System.Console.Write("P3\n{} {}\n255\n", image_width, image_height);
 			var ErrStream = System.Console.Error;
+
+
 			for (int j = 0; j < image_width; ++j) {
 				ErrStream.Write("\rScanlines remaining: {}", j);
 				for (int i = 0; i < image_height; ++i) {
