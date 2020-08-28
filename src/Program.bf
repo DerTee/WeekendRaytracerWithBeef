@@ -4,6 +4,22 @@ namespace RayTracingInOneWeekendWithBeef
 {
 	class Program
 	{
+		static Color ray_color(Ray r)
+		{
+			Vec3 unit_direction = Vec3.unit_vector(r.direction);
+			let t = 0.5*(unit_direction.y + 1.0);
+			return (1.0-t)*(scope Color(1.0, 1.0, 1.0)) + t*(scope Color(0.5, 0.7, 1.0));
+		}
+
+		static void write_color(System.IO.StreamWriter outstream, Color c)
+		{
+			outstream.WriteLine("{} {} {}",
+				(int)(255.9*c.x),
+				(int)(255.9*c.y),
+				(int)(255.9*c.z)
+				);
+		}
+
 		static void Main()
 		{
 			// Image
@@ -25,7 +41,7 @@ namespace RayTracingInOneWeekendWithBeef
 						double(i)/(image_width-1),
 						double(j)/(image_height-1),
 						0.25);
-					pixel_color.write_color(OutStream);
+					write_color(OutStream, pixel_color);
 				}	
 			}
 		}

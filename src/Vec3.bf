@@ -151,15 +151,6 @@ namespace RayTracingInOneWeekendWithBeef
 		{
 			return v / v.length();
 		}
-
-		public void write_color(System.IO.StreamWriter outstream)
-		{
-			outstream.WriteLine("{} {} {}",
-				(int)(255.9*x),
-				(int)(255.9*y),
-				(int)(255.9*z)
-				);
-		}
 	}
 
 	typealias Color = Vec3;
