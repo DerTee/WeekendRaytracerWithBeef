@@ -27,21 +27,21 @@ namespace RayTracingInOneWeekendWithBeef
 			set mut { e[key] = value; }
 		}
 
-		public void operator+=(Vec3 rhs)
+		public void operator +=(Vec3 rhs)
 		{
 		    e[0] += rhs.e[0];
 			e[1] += rhs.e[1];
 			e[2] += rhs.e[2];
 		}
 
-		public void operator-=(Vec3 rhs)
+		public void operator -=(Vec3 rhs)
 		{
 		    e[0] -= rhs.e[0];
 			e[1] -= rhs.e[1];
 			e[2] -= rhs.e[2];
 		}
 
-		public void operator*=(double t)
+		public void operator *=(double t)
 		{
 		    e[0] *= t;
 			e[1] *= t;
@@ -49,9 +49,9 @@ namespace RayTracingInOneWeekendWithBeef
 		}
 
 		
-		public void operator/=(double t)
+		public void operator /=(double t)
 		{
-			// would like to do the following, but it doesnt work
+			// would like to do the following, but it doesn't work
 		    // this *= 1/t;
 			e[0] /= t;
 			e[1] /= t;
