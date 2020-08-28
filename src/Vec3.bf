@@ -129,6 +129,37 @@ namespace RayTracingInOneWeekendWithBeef
 		public override void ToString(String strbuffer) {
 			strbuffer.AppendF("{} {} {}", e[0], e[1], e[2]);
 		}
+
+		[Inline]
+		public double dot(Vec3 u, Vec3 v)
+		{
+			return u.e[0] * v.e[0]
+				 + u.e[1] * v.e[1]
+				 + u.e[2] * v.e[2];
+		}
+
+		[Inline]
+		public Vec3 cross(Vec3 u, Vec3 v)
+		{
+			return new Vec3(u.e[1] * v.e[2] - u.e[2] * v.e[1],
+				 			u.e[2] * v.e[0] - u.e[0] * v.e[2],
+				 			u.e[0] * v.e[1] - u.e[1] * v.e[0]);
+		}
+
+		[Inline]
+		public Vec3 unit_vector(Vec3 v)
+		{
+			return v / v.length();
+		}
+
+		public void write_color(System.IO.StreamWriter outstream)
+		{
+			outstream.WriteLine("{} {} {}",
+				(int)(255.9*x),
+				(int)(255.9*y),
+				(int)(255.9*z)
+				);
+		}
 	}
 
 	typealias Color = Vec3;
