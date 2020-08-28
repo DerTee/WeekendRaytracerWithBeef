@@ -15,20 +15,17 @@ namespace RayTracingInOneWeekendWithBeef
 
 			System.Console.Write("P3\n{} {}\n255\n", image_width, image_height);
 			var ErrStream = System.Console.Error;
+			var OutStream = System.Console.Out;
 
 
-			for (int j = 0; j < image_width; ++j) {
+			for (int j = 0; j < image_height; ++j) {
 				ErrStream.Write("\rScanlines remaining: {}", j);
-				for (int i = 0; i < image_height; ++i) {
-					double r = (double)i / (image_width-1);
-					double g = (double)j / (image_height-1);
-					double b = 0.25;
-
-					int ir = (int)(255.9 * r);
-					int ig = (int)(255.9 * g);
-					int ib = (int)(255.9 * b);
-
-					System.Console.WriteLine("{} {} {}", ir, ig, ib);
+				for (int i = 0; i < image_width; ++i) {
+					let pixel_color = scope Color(
+						double(i)/(image_width-1),
+						double(j)/(image_height-1),
+						0.25);
+					pixel_color.write_color(OutStream);
 				}	
 			}
 		}
