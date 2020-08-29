@@ -2,7 +2,7 @@ using System;
 
 namespace RayTracingInOneWeekendWithBeef
 {
-	class Vec3
+	struct Vec3
 	{
 		public double[3] e;
 
@@ -27,7 +27,7 @@ namespace RayTracingInOneWeekendWithBeef
 		}
 
 		[Inline]
-		public void operator +=(Vec3 rhs)
+		public void operator +=(Vec3 rhs) mut
 		{
 		    e[0] += rhs.e[0];
 			e[1] += rhs.e[1];
@@ -35,7 +35,7 @@ namespace RayTracingInOneWeekendWithBeef
 		}
 
 		[Inline]
-		public void operator -=(Vec3 rhs)
+		public void operator -=(Vec3 rhs) mut
 		{
 		    e[0] -= rhs.e[0];
 			e[1] -= rhs.e[1];
@@ -43,7 +43,7 @@ namespace RayTracingInOneWeekendWithBeef
 		}
 
 		[Inline]
-		public void operator *=(double t)
+		public void operator *=(double t) mut
 		{
 		    e[0] *= t;
 			e[1] *= t;
@@ -51,7 +51,7 @@ namespace RayTracingInOneWeekendWithBeef
 		}
 
 		[Inline]
-		public void operator /=(double t)
+		public void operator /=(double t) mut
 		{
 			// would like to do the following, but it doesn't work
 		    // this *= 1/t;
@@ -98,27 +98,27 @@ namespace RayTracingInOneWeekendWithBeef
 
 		[Inline]
 		public static Vec3 operator +(Vec3 lhs, Vec3 rhs) {
-			return new Vec3(lhs[0] + rhs[0], lhs[1] + rhs[1], lhs[2] + rhs[2]);
+			return Vec3(lhs[0] + rhs[0], lhs[1] + rhs[1], lhs[2] + rhs[2]);
 		}
 
 		[Inline]
 		public static Vec3 operator -(Vec3 lhs, Vec3 rhs) {
-			return new Vec3(lhs[0] - rhs[0], lhs[1] - rhs[1], lhs[2] - rhs[2]);
+			return Vec3(lhs[0] - rhs[0], lhs[1] - rhs[1], lhs[2] - rhs[2]);
 		}
 
 		[Inline]
 		public static Vec3 operator *(Vec3 lhs, Vec3 rhs) {
-			return new Vec3(lhs[0] * rhs[0], lhs[1] * rhs[1], lhs[2] * rhs[2]);
+			return Vec3(lhs[0] * rhs[0], lhs[1] * rhs[1], lhs[2] * rhs[2]);
 		}
 
 		[Inline]
 		public static Vec3 operator *(double t, Vec3 v) {
-			return new Vec3(v[0] * t, v[1] * t, v[2] * t);
+			return Vec3(v[0] * t, v[1] * t, v[2] * t);
 		}
 
 		[Inline]
 		public static Vec3 operator *(Vec3 v, double t) {
-			return new Vec3(v[0] * t, v[1] * t, v[2] * t);
+			return Vec3(v[0] * t, v[1] * t, v[2] * t);
 		}
 
 		[Inline]
@@ -141,9 +141,9 @@ namespace RayTracingInOneWeekendWithBeef
 		[Inline]
 		public Vec3 cross(Vec3 u, Vec3 v)
 		{
-			return new Vec3(u.e[1] * v.e[2] - u.e[2] * v.e[1],
-				 			u.e[2] * v.e[0] - u.e[0] * v.e[2],
-				 			u.e[0] * v.e[1] - u.e[1] * v.e[0]);
+			return Vec3(u.e[1] * v.e[2] - u.e[2] * v.e[1],
+				 		u.e[2] * v.e[0] - u.e[0] * v.e[2],
+				 		u.e[0] * v.e[1] - u.e[1] * v.e[0]);
 		}
 
 		[Inline]
