@@ -5,11 +5,11 @@ namespace RayTracingInOneWeekendWithBeef
 		public Point3 orig;
 		public Vec3 dir;
 
-		this()
+		public this()
 		{
 		}
 
-		this(Point3 origin, Vec3 direction)
+		public this(Point3 origin, Vec3 direction)
 		{
 			orig = origin;
 			dir = direction;
