@@ -14,7 +14,7 @@ namespace RayTracingWeekend
 			center = cen;
 		}
 
-		public override bool hit(Ray r, double t_min, double t_max, hit_record* rec)
+		public override bool hit(Ray r, double t_min, double t_max, ref hit_record rec)
 		{
 			Vec3 oc = r.origin;
 			let a = r.direction.length_squared();
