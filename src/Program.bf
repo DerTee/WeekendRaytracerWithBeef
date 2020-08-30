@@ -24,9 +24,23 @@ namespace RayTracingInOneWeekendWithBeef
 		{
 			// Image
 
-			int image_width = 480;
-			int image_height = 270;
-			var ray = scope Ray(Point3(0.0, 0.0, 0.0), Vec3(1.0, 1.0, -10.0));
+			let aspect_ratio = 16.0 / 9.0;
+			let image_width = 340;
+			let image_height = (int)(image_width / aspect_ratio);
+
+			// Camera
+
+			let viewport_height = 2.0;
+			let viewport_width = aspect_ratio * viewport_height;
+			let focal_length = 1.0;
+
+			let origin = Point3(0, 0, 0);
+			let horizontal = Vec3(viewport_width, 0, 0);
+			let vertical = Vec3(0, viewport_height, 0);
+			let lower_left_corner = origin - horizontal/2 - vertical/2 - Vec3(0, 0, focal_length);
+
+			// var ray = scope Ray(Point3(0.0, 0.0, 0.0), Vec3(1.0, 1.0, -10.0));
+
 
 			// Render
 
@@ -38,11 +52,13 @@ namespace RayTracingInOneWeekendWithBeef
 			for (int j = 0; j < image_height; ++j) {
 				ErrStream.Write("\rScanlines remaining: {}", j);
 				for (int i = 0; i < image_width; ++i) {
-					ray.direction.x = double(i)/(image_width-1);
-					ray.direction.y = double(j)/(image_height-1);
+					let u = double(i)/(image_width-1);
+					let v = double(j)/(image_height-1);
+					let ray = scope Ray(origin, lower_left_corner + u*horizontal + v*vertical - origin);
 					write_color(OutStream, ray_color(ray));
 				}
 			}
+			ErrStream.Write("\nDone.\n");
 		}
 	}
 }
