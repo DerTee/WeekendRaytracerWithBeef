@@ -131,7 +131,7 @@ namespace RayTracingInOneWeekendWithBeef
 		}
 
 		[Inline]
-		public double dot(Vec3 u, Vec3 v)
+		public static double dot(Vec3 u, Vec3 v)
 		{
 			return u.e[0] * v.e[0]
 				 + u.e[1] * v.e[1]
@@ -139,7 +139,7 @@ namespace RayTracingInOneWeekendWithBeef
 		}
 
 		[Inline]
-		public Vec3 cross(Vec3 u, Vec3 v)
+		public static Vec3 cross(Vec3 u, Vec3 v)
 		{
 			return Vec3(u.e[1] * v.e[2] - u.e[2] * v.e[1],
 				 		u.e[2] * v.e[0] - u.e[0] * v.e[2],
