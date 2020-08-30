@@ -12,29 +12,14 @@ namespace RayTracingWeekend
 			return degrees * Math.PI_d / 180;
 		}
 
-		static double hit_sphere(Point3 center, double radius, Ray r)
+		static Color ray_color(Ray r, Hittable world)
 		{
-			Vec3 oc = r.origin - center;
-			let a = r.direction.length_squared();
-			let half_b = Vec3.dot(oc, r.direction);
-			let c = oc.length_squared() - radius*radius;
-			let discriminant = half_b*half_b - a*c;
-			if (discriminant < 0) {
-				return -1.0;
-			} else {
-				return (-half_b - Math.Sqrt(discriminant)) / a;
-			}
-		}
-
-		static Color ray_color(Ray r)
-		{
-			var t = hit_sphere(Point3(0, 0, -1), 0.5, r);
-			if (t > 0.0) {
-				Vec3 N = Vec3.unit_vector(r.at(t) - Vec3(0, 0, -1));
-				return 0.5*Color(N.x+1, N.y+1, N.z+1);
+			var rec = hit_record();
+			if (world.hit(r, 0, Double.MaxValue, ref rec)) {
+				return 0.5 * (rec.normal + Color(1,1,1));
 			}
 			Vec3 unit_direction = Vec3.unit_vector(r.direction);
-			t = 0.5*(unit_direction.y + 1.0);
+			let t = 0.5*(unit_direction.y + 1.0);
 			return (1.0-t)*(Color(1.0, 1.0, 1.0)) + t*(Color(0.5, 0.7, 1.0));
 		}
 
@@ -54,6 +39,18 @@ namespace RayTracingWeekend
 			let aspect_ratio = 16.0 / 9.0;
 			let image_width = 340;
 			let image_height = (int)(image_width / aspect_ratio);
+
+			// World
+			var world = scope HittableList();
+			var sphere1 = new Sphere(Point3(0,0,-1), 0.5);
+			world.add(ref sphere1);
+			var sphere2 = new Sphere(Point3(0,-100.5,-1), 100);
+			world.add(ref sphere2);
+			defer
+			{
+				delete sphere1;
+				delete sphere2;
+			}
 
 			// Camera
 
@@ -84,7 +81,8 @@ namespace RayTracingWeekend
 					let u = double(i)/(image_width-1);
 					let v = double(j)/(image_height-1);
 					ray.dir = lower_left_corner + u*horizontal + v*vertical - origin;
-					write_color(OutStream, ray_color(ray));
+					let pixel_color = ray_color(ray, world);
+					write_color(OutStream, pixel_color);
 				}
 			}
 			ErrStream.Write("\nDone.\n");
