@@ -8,7 +8,7 @@ namespace RayTracingInOneWeekendWithBeef
 		{
 			Vec3 unit_direction = Vec3.unit_vector(r.direction);
 			let t = 0.5*(unit_direction.y + 1.0);
-			return (1.0-t)*(scope Color(1.0, 1.0, 1.0)) + t*(scope Color(0.5, 0.7, 1.0));
+			return (1.0-t)*(Color(1.0, 1.0, 1.0)) + t*(Color(0.5, 0.7, 1.0));
 		}
 
 		static void write_color(System.IO.StreamWriter outstream, Color c)

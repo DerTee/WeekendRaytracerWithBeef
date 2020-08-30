@@ -7,7 +7,7 @@ namespace RayTracingInOneWeekendWithBeef
 		[Test]
 		public static void TestConstructorNoArgs()
 		{
-			let v = scope Vec3();
+			let v = Vec3();
 			Test.Assert(v.e[0] === 0);
 			Test.Assert(v.e[1] === 0);
 			Test.Assert(v.e[2] === 0);
@@ -16,7 +16,7 @@ namespace RayTracingInOneWeekendWithBeef
 		[Test]
 		public static void TestConstructorWithArgs()
 		{
-			let v = scope Vec3(2.0, 8.0, 12.0);
+			let v = Vec3(2.0, 8.0, 12.0);
 			Test.Assert(v.e[0] === 2.0);
 			Test.Assert(v.e[1] === 8.0);
 			Test.Assert(v.e[2] === 12.0);
@@ -25,7 +25,7 @@ namespace RayTracingInOneWeekendWithBeef
 		[Test]
 		public static void TestAccessByIndex()
 		{
-			let v = scope Vec3(2.0, 8.0, 12.0);
+			let v = Vec3(2.0, 8.0, 12.0);
 			Test.Assert(v[0] === 2.0);
 			Test.Assert(v[1] === 8.0);
 			Test.Assert(v[2] === 12.0);
@@ -34,7 +34,7 @@ namespace RayTracingInOneWeekendWithBeef
 		[Test]
 		public static void TestAccessByXYZ()
 		{
-			let v = scope Vec3(2.0, 8.0, 12.0);
+			let v = Vec3(2.0, 8.0, 12.0);
 			Test.Assert(v.x === 2.0);
 			Test.Assert(v.y === 8.0);
 			Test.Assert(v.z === 12.0);
@@ -43,8 +43,8 @@ namespace RayTracingInOneWeekendWithBeef
 		[Test]
 		public static void TestAddAssignOperator()
 		{
-			var v = scope Vec3(2.0, 8.0, 12.0);
-			let v2 = scope Vec3(1.0, 1.0, 1.0);
+			var v = Vec3(2.0, 8.0, 12.0);
+			let v2 = Vec3(1.0, 1.0, 1.0);
 			v += v2;
 			Test.Assert(v.x === 3.0);
 			Test.Assert(v.y === 9.0);
@@ -54,8 +54,8 @@ namespace RayTracingInOneWeekendWithBeef
 		[Test]
 		public static void TestSubtractAssignOperator()
 		{
-			var v = scope Vec3(2.0, 8.0, 12.0);
-			let v2 = scope Vec3(1.0, 2.0, 4.0);
+			var v = Vec3(2.0, 8.0, 12.0);
+			let v2 = Vec3(1.0, 2.0, 4.0);
 			v -= v2;
 			Test.Assert(v.x === 1.0);
 			Test.Assert(v.y === 6.0);
@@ -65,14 +65,14 @@ namespace RayTracingInOneWeekendWithBeef
 		[Test]
 		public static void TestLengthOneAxis()
 		{
-			let v = scope Vec3(2.0, 0.0, 0.0);
+			let v = Vec3(2.0, 0.0, 0.0);
 			Test.Assert(v.length() === 2.0);
 		}
 
 		[Test]
 		public static void TestLengthAllAxis()
 		{
-			let v = scope Vec3(8.0, 3.0, 5.0);
+			let v = Vec3(8.0, 3.0, 5.0);
 			//                64  + 9 + 25  = 98
 			//    square root(          98) = 9.8994949366116654
 			Test.Assert(v.length() === 9.8994949366116654);
@@ -81,10 +81,9 @@ namespace RayTracingInOneWeekendWithBeef
 		[Test]
 		public static void TestMultiplyOperator()
 		{
-			let v1 = scope Vec3(2.0, 0.0, 5.0);
-			let v2 = scope Vec3(5.5, 3.0, 3.0);
-			let v = v1 * v2;
-			defer delete v;
+			let v1 = Vec3(2.0, 0.0, 5.0);
+			let v2 = Vec3(5.5, 3.0, 3.0);
+			Vec3 v = v1 * v2;
 			Test.Assert(v[0] === 11.0);
 			Test.Assert(v[1] === 0.0);
 			Test.Assert(v[2] === 15.0);
@@ -93,7 +92,7 @@ namespace RayTracingInOneWeekendWithBeef
 		[Test]
 		public static void TestToString()
 		{
-			let v = scope Vec3(2.125, 0.0, 5.25);
+			let v = Vec3(2.125, 0.0, 5.25);
 			var str = scope String();
 			v.ToString(str);
 
