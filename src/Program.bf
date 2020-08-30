@@ -7,14 +7,14 @@ namespace RayTracingWeekend
 		static double hit_sphere(Point3 center, double radius, Ray r)
 		{
 			Vec3 oc = r.origin - center;
-			let a = Vec3.dot(r.direction, r.direction);
-			let b = 2.0 * Vec3.dot(oc, r.direction);
-			let c = Vec3.dot(oc, oc) - radius*radius;
-			let discriminant = b*b - 4*a*c;
+			let a = r.direction.length_squared();
+			let half_b = Vec3.dot(oc, r.direction);
+			let c = oc.length_squared() - radius*radius;
+			let discriminant = half_b*half_b - a*c;
 			if (discriminant < 0) {
 				return -1.0;
 			} else {
-				return (-b - Math.Sqrt(discriminant)) / (2.0*a);
+				return (-half_b - Math.Sqrt(discriminant)) / a;
 			}
 		}
 
