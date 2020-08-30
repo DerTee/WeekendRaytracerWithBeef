@@ -4,6 +4,14 @@ namespace RayTracingWeekend
 {
 	class Program
 	{
+		// Utilities
+		//  wrong place, but there is no right place yet
+		[Inline]
+		public static double degrees_to_radians(double degrees)
+		{
+			return degrees * Math.PI_d / 180;
+		}
+
 		static double hit_sphere(Point3 center, double radius, Ray r)
 		{
 			Vec3 oc = r.origin - center;
