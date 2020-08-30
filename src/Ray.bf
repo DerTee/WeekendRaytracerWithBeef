@@ -25,7 +25,7 @@ namespace RayTracingInOneWeekendWithBeef
 			get { return dir; }
 		}
 
-		Point3 at(double t)
+		public Point3 at(double t)
 		{
 			return orig + t*dir;
 		}
