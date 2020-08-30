@@ -24,8 +24,9 @@ namespace RayTracingInOneWeekendWithBeef
 		{
 			// Image
 
-			int image_width = 256;
-			int image_height = 256;
+			int image_width = 480;
+			int image_height = 270;
+			var ray = scope Ray(Point3(0.0, 0.0, 0.0), Vec3(1.0, 1.0, -10.0));
 
 			// Render
 
@@ -37,12 +38,10 @@ namespace RayTracingInOneWeekendWithBeef
 			for (int j = 0; j < image_height; ++j) {
 				ErrStream.Write("\rScanlines remaining: {}", j);
 				for (int i = 0; i < image_width; ++i) {
-					let pixel_color = scope Color(
-						double(i)/(image_width-1),
-						double(j)/(image_height-1),
-						0.25);
-					write_color(OutStream, pixel_color);
-				}	
+					ray.direction.x = double(i)/(image_width-1);
+					ray.direction.y = double(j)/(image_height-1);
+					write_color(OutStream, ray_color(ray));
+				}
 			}
 		}
 	}
