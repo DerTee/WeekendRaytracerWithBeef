@@ -4,8 +4,22 @@ namespace RayTracingInOneWeekendWithBeef
 {
 	class Program
 	{
+		static bool hit_sphere(Point3 center, double radius, Ray r)
+		{
+			Vec3 oc = r.origin - center;
+			let a = Vec3.dot(r.direction, r.direction);
+			let b = 2.0 * Vec3.dot(oc, r.direction);
+			let c = Vec3.dot(oc, oc) - radius*radius;
+			let discriminant = b*b - 4*a*c;
+			return discriminant > 0;
+		}
+
 		static Color ray_color(Ray r)
 		{
+			if (hit_sphere(Point3(0, 0, -1), 0.5, r))
+			{
+				return Color(1, 0, 0);
+			}
 			Vec3 unit_direction = Vec3.unit_vector(r.direction);
 			let t = 0.5*(unit_direction.y + 1.0);
 			return (1.0-t)*(Color(1.0, 1.0, 1.0)) + t*(Color(0.5, 0.7, 1.0));
