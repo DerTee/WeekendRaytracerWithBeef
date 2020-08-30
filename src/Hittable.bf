@@ -16,8 +16,8 @@ namespace RayTracingWeekend
 		}
 	}
 
-	abstract class Hittable
+	interface Hittable
 	{
-		public abstract bool hit(Ray r, double t_min, double t_max, ref hit_record rec);
+		public bool hit(Ray r, double t_min, double t_max, ref hit_record rec);
 	}
 }

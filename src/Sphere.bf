@@ -2,7 +2,7 @@ using System;
 
 namespace RayTracingWeekend
 {
-	class Sphere :  Hittable
+	class Sphere : Hittable
 	{
 		public Point3 center;
 		public double radius;
@@ -14,7 +14,7 @@ namespace RayTracingWeekend
 			center = cen;
 		}
 
-		public override bool hit(Ray r, double t_min, double t_max, ref hit_record rec)
+		public bool hit(Ray r, double t_min, double t_max, ref hit_record rec)
 		{
 			Vec3 oc = r.origin;
 			let a = r.direction.length_squared();

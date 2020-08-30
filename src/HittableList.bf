@@ -7,12 +7,12 @@ namespace RayTracingWeekend
 		public List<Hittable> objects;
 
 		public this() {}
-		public this(Hittable object) {}
+		public this(ref Hittable object) { add(ref object); }
 
 		public void clear() { objects.Clear(); }
 		public void add(ref Hittable object) { objects.Add(object); }
 
-		public override bool hit(Ray r, double t_min, double t_max, ref hit_record rec)
+		public bool hit(Ray r, double t_min, double t_max, ref hit_record rec)
 		{
 			var temp_rec = hit_record();
 			var hit_anything = false;
