@@ -71,7 +71,7 @@ namespace RayTracingWeekend
 			for (int j = image_height-1; j >= 0; --j)
 			{
 				ErrStream.Write("\rScanlines remaining: {}", j);
-				for (int i = 0; i < image_width; ++i)
+				for (int i < image_width)
 				{
 					let u = double(i)/(image_width-1);
 					let v = double(j)/(image_height-1);
