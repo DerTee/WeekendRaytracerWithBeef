@@ -39,7 +39,7 @@ namespace RayTracingInOneWeekendWithBeef
 			let vertical = Vec3(0, viewport_height, 0);
 			let lower_left_corner = origin - horizontal/2 - vertical/2 - Vec3(0, 0, focal_length);
 
-			// var ray = scope Ray(Point3(0.0, 0.0, 0.0), Vec3(1.0, 1.0, -10.0));
+			var ray = scope Ray(Point3(0.0, 0.0, 0.0), Vec3(1.0, 1.0, -10.0));
 
 
 			// Render
@@ -54,7 +54,7 @@ namespace RayTracingInOneWeekendWithBeef
 				for (int i = 0; i < image_width; ++i) {
 					let u = double(i)/(image_width-1);
 					let v = double(j)/(image_height-1);
-					let ray = scope Ray(origin, lower_left_corner + u*horizontal + v*vertical - origin);
+					ray.dir = lower_left_corner + u*horizontal + v*vertical - origin;
 					write_color(OutStream, ray_color(ray));
 				}
 			}
