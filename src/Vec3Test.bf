@@ -1,6 +1,6 @@
 using System;
 
-namespace RayTracingInOneWeekendWithBeef
+namespace RayTracingWeekend
 {
 	class Vec3Test
 	{

@@ -1,6 +1,6 @@
 using System;
 
-namespace RayTracingInOneWeekendWithBeef
+namespace RayTracingWeekend
 {
 	struct Vec3
 	{

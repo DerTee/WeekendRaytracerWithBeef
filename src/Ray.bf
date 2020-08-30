@@ -1,4 +1,4 @@
-namespace RayTracingInOneWeekendWithBeef
+namespace RayTracingWeekend
 {
 	class Ray
 	{

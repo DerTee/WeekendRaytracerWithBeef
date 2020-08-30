@@ -2,4 +2,5 @@ FileVersion = 1
 
 [Project]
 Name = "RayTracingInOneWeekendWithBeef"
-StartupObject = "RayTracingInOneWeekendWithBeef.Program"
+StartupObject = "RayTracingWeekend.Program"
+DefaultNamespace = "RayTracingWeekend"
