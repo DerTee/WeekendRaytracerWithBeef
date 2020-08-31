@@ -41,15 +41,16 @@ namespace RayTracingWeekend
 			let image_height = (int)(image_width / aspect_ratio);
 
 			// World
-			var world = scope HittableList();
+			var world = new HittableList();
 			var sphere1 = new Sphere(Point3(0,0,-1), 0.5);
-			world.add(ref sphere1);
+			world.add(sphere1);
 			var sphere2 = new Sphere(Point3(0,-100.5,-1), 100);
-			world.add(ref sphere2);
+			world.add(sphere2);
 			defer
 			{
 				delete sphere1;
 				delete sphere2;
+				delete world;
 			}
 
 			// Camera
