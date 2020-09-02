@@ -4,11 +4,10 @@ namespace RayTracingWeekend
 {
 	class HittableList : Hittable
 	{
-		public var objects = new List<Hittable>();
+		public var objects = new List<Hittable>() ~ delete _;
 
 		public this() {}
 		public this(Hittable object) { add(object); }
-		public ~this() { delete objects; }
 
 		public void clear() { objects.Clear(); }
 		public void add(Hittable object) { objects.Add(object); }
