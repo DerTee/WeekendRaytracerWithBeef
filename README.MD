@@ -1,6 +1,6 @@
 # Raytracer in a weekend
 
-This is following a [_Ray Tracing in One Weekend_](https://raytracing.github.io/books/RayTracingInOneWeekend.html).
+This is following [_Ray Tracing in One Weekend_](https://raytracing.github.io/books/RayTracingInOneWeekend.html).
 The language used is [Beef](https://github.com/beefytech/Beef).
 
 
