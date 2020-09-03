@@ -16,7 +16,7 @@ namespace RayTracingWeekend
 
 		public bool hit(Ray r, double t_min, double t_max, ref hit_record rec)
 		{
-			Vec3 oc = r.origin;
+			Vec3 oc = r.origin - center;
 			let a = r.direction.length_squared();
 			let half_b = Vec3.dot(oc, r.direction);
 			let c = oc.length_squared() - radius*radius;
