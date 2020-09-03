@@ -29,7 +29,8 @@ namespace RayTracingWeekend
 				if (temp < t_max && temp > t_min) {
 					rec.t = temp;
 					rec.p = r.at(rec.t);
-					rec.normal = (rec.p - center) / radius;
+					Vec3 outward_normal = (rec.p - center) / radius;
+					rec.set_face_normal(r, outward_normal);
 					return true;
 				}
 
@@ -37,7 +38,8 @@ namespace RayTracingWeekend
 				if(temp < t_max && temp > t_min) {
 					rec.t = temp;
 					rec.p = r.at(rec.t);
-					rec.normal = (rec.p - center) / radius;
+					Vec3 outward_normal = (rec.p - center) / radius;
+					rec.set_face_normal(r, outward_normal);
 					return true;
 				}
 			}
