@@ -64,14 +64,12 @@ namespace RayTracingWeekend
 			let vertical = Vec3(0, viewport_height, 0);
 			let lower_left_corner = origin - horizontal/2 - vertical/2 - Vec3(0, 0, focal_length);
 
-			var ray = scope Ray(Point3(0.0, 0.0, 0.0), Vec3(1.0, 1.0, -10.0));
-
 
 			// Render
 
-			System.Console.Write("P3\n{} {}\n255\n", image_width, image_height);
 			var ErrStream = System.Console.Error;
 			var OutStream = System.Console.Out;
+			OutStream.Write("P3\n{} {}\n255\n", image_width, image_height);
 
 
 			for (int j = image_height-1; j >= 0; --j)
@@ -81,8 +79,9 @@ namespace RayTracingWeekend
 				{
 					let u = double(i)/(image_width-1);
 					let v = double(j)/(image_height-1);
-					ray.dir = lower_left_corner + u*horizontal + v*vertical;
-					let pixel_color = ray_color(ray, world);
+					let r = scope Ray(Point3(0.0, 0.0, 0.0), Vec3(1.0, 1.0, -10.0));
+					r.dir = lower_left_corner + u*horizontal + v*vertical;
+					let pixel_color = ray_color(r, world);
 					write_color(OutStream, pixel_color);
 				}
 			}
