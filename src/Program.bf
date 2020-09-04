@@ -23,22 +23,32 @@ namespace RayTracingWeekend
 			return (1.0-t)*(Color(1.0, 1.0, 1.0)) + t*(Color(0.5, 0.7, 1.0));
 		}
 
-		static void write_color(System.IO.StreamWriter outstream, Color c)
+		static void write_color(ref System.Collections.List<String> imageData, Color pixel_color, int samples_per_pixel)
 		{
-			outstream.WriteLine("{} {} {}",
-				(int)(255.9*c.x),
-				(int)(255.9*c.y),
-				(int)(255.9*c.z)
-				);
+			var r = pixel_color.x;
+			var g = pixel_color.y;
+			var b = pixel_color.z;
+
+			// Divide the color by the number of samples
+			let scale = 1.0/ samples_per_pixel;
+			r *= scale;
+			g *= scale;
+			b *= scale;
+
+			imageData.Add(new String()..AppendF("{} {} {}",
+				(int)(256 * Math.Clamp(r, 0.0, 0.999)),
+				(int)(256 * Math.Clamp(g, 0.0, 0.999)),
+				(int)(256 * Math.Clamp(b, 0.0, 0.999))
+				));
 		}
 
 		static void Main()
 		{
 			// Image
-
 			let aspect_ratio = 16.0 / 9.0;
 			let image_width = 340;
 			let image_height = (int)(image_width / aspect_ratio);
+			let samples_per_pixel = 5;
 
 			// World
 			var world = new HittableList();
@@ -53,39 +63,40 @@ namespace RayTracingWeekend
 				delete world;
 			}
 
-			// Camera
-
-			let viewport_height = 2.0;
-			let viewport_width = aspect_ratio * viewport_height;
-			let focal_length = 1.0;
-
-			let origin = Point3(0, 0, 0);
-			let horizontal = Vec3(viewport_width, 0, 0);
-			let vertical = Vec3(0, viewport_height, 0);
-			let lower_left_corner = origin - horizontal/2 - vertical/2 - Vec3(0, 0, focal_length);
-
-
 			// Render
-
+			var imageData = new System.Collections.List<String>();
+			defer delete imageData;
 			var ErrStream = System.Console.Error;
-			var OutStream = System.Console.Out;
-			OutStream.Write("P3\n{} {}\n255\n", image_width, image_height);
+			// var OutStream = System.Console.Out;
+			imageData.Add(scope String()..AppendF("P3\n{} {}\n255\n", image_width, image_height));
 
+			// Camera
+			let cam = scope Camera();
+
+			var rand = new Random();
+			defer delete rand;
 
 			for (int j = image_height-1; j >= 0; --j)
 			{
 				ErrStream.Write("\rScanlines remaining: {}", j);
 				for (int i < image_width)
 				{
-					let u = double(i)/(image_width-1);
-					let v = double(j)/(image_height-1);
-					let r = scope Ray(Point3(0.0, 0.0, 0.0), Vec3(1.0, 1.0, -10.0));
-					r.dir = lower_left_corner + u*horizontal + v*vertical;
-					let pixel_color = ray_color(r, world);
-					write_color(OutStream, pixel_color);
+					var pixel_color = scope Color(0.0, 0.0, 0.0);
+					for (int s < samples_per_pixel)
+					{
+						let u = (i + rand.NextDouble())/(image_width-1);
+						let v = (j + rand.NextDouble())/(image_height-1);
+						let r = cam.get_ray(u, v);
+						defer delete r;
+						*pixel_color += ray_color(r, world);
+					}
+					write_color(ref imageData, *pixel_color, samples_per_pixel);
 				}
 			}
 			ErrStream.Write("\nDone.\n");
+			let fileName = "image.ppm";
+			System.IO.File.WriteAllLines(fileName, imageData.GetEnumerator());
+			delete imageData;
 		}
 	}
 }
