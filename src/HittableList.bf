@@ -19,7 +19,7 @@ namespace RayTracingWeekend
 			var closest_so_far = t_max;
 
 			for (var object in objects) {
-				if (object.hit(r, t_min, t_max, ref temp_rec)) {
+				if (object.hit(r, t_min, closest_so_far, ref temp_rec)) {
 					hit_anything = true;
 					closest_so_far = temp_rec.t;
 					rec = temp_rec;
