@@ -81,7 +81,7 @@ namespace RayTracingWeekend
 				{
 					let u = double(i)/(image_width-1);
 					let v = double(j)/(image_height-1);
-					ray.dir = lower_left_corner + u*horizontal + v*vertical - origin;
+					ray.dir = lower_left_corner + u*horizontal + v*vertical;
 					let pixel_color = ray_color(ray, world);
 					write_color(OutStream, pixel_color);
 				}
