@@ -79,7 +79,7 @@ namespace RayTracingWeekend
 
 			for (int j = image_height-1; j >= 0; --j)
 			{
-				ErrStream.Write("\rScanlines remaining: {}", j);
+				ErrStream.Write("\rScanlines remaining: {0,5}", j);
 				for (int i < image_width)
 				{
 					var pixel_color = scope Color(0.0, 0.0, 0.0);
