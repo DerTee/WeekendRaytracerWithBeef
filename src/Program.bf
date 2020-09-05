@@ -23,7 +23,7 @@ namespace RayTracingWeekend
 			return (1.0-t)*(Color(1.0, 1.0, 1.0)) + t*(Color(0.5, 0.7, 1.0));
 		}
 
-		static void write_color(ref System.Collections.List<String> imageData, Color pixel_color, int samples_per_pixel)
+		static void write_color(ref String imageData, Color pixel_color, int samples_per_pixel)
 		{
 			var r = pixel_color.x;
 			var g = pixel_color.y;
@@ -35,11 +35,11 @@ namespace RayTracingWeekend
 			g *= scale;
 			b *= scale;
 
-			imageData.Add(new String()..AppendF("{} {} {}",
+			imageData.AppendF("\n{} {} {}",
 				(int)(256 * Math.Clamp(r, 0.0, 0.999)),
 				(int)(256 * Math.Clamp(g, 0.0, 0.999)),
 				(int)(256 * Math.Clamp(b, 0.0, 0.999))
-				));
+				);
 		}
 
 		static void Main()
@@ -64,11 +64,12 @@ namespace RayTracingWeekend
 			}
 
 			// Render
-			var imageData = new System.Collections.List<String>();
+			var imageData = new String();
 			defer delete imageData;
+
 			var ErrStream = System.Console.Error;
 			// var OutStream = System.Console.Out;
-			imageData.Add(scope String()..AppendF("P3\n{} {}\n255\n", image_width, image_height));
+			imageData.AppendF("P3\n{} {}\n255\n", image_width, image_height);
 
 			// Camera
 			let cam = scope Camera();
@@ -95,8 +96,7 @@ namespace RayTracingWeekend
 			}
 			ErrStream.Write("\nDone.\n");
 			let fileName = "image.ppm";
-			System.IO.File.WriteAllLines(fileName, imageData.GetEnumerator());
-			delete imageData;
+			System.IO.File.WriteAllText(fileName, imageData);
 		}
 	}
 }
