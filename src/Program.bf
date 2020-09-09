@@ -30,7 +30,7 @@ namespace RayTracingWeekend
 			var b = pixel_color.z;
 
 			// Divide the color by the number of samples
-			let scale = 1.0/ samples_per_pixel;
+			let scale = 1.0 / samples_per_pixel;
 			r *= scale;
 			g *= scale;
 			b *= scale;
@@ -48,7 +48,7 @@ namespace RayTracingWeekend
 			let aspect_ratio = 16.0 / 9.0;
 			let image_width = 340;
 			let image_height = (int)(image_width / aspect_ratio);
-			let samples_per_pixel = 5;
+			let samples_per_pixel = 8;
 
 			// World
 			var world = new HittableList();
@@ -67,26 +67,24 @@ namespace RayTracingWeekend
 			var imageData = new String();
 			defer delete imageData;
 
-			var ErrStream = System.Console.Error;
-			// var OutStream = System.Console.Out;
+			var Stream = System.Console.Error;
 			imageData.AppendF("P3\n{} {}\n255\n", image_width, image_height);
 
 			// Camera
-			let cam = scope Camera();
+			var cam = scope Camera();
 
-			var rand = new Random();
-			defer delete rand;
+			var rand = scope Random();
 
 			for (int j = image_height-1; j >= 0; --j)
 			{
-				ErrStream.Write("\rScanlines remaining: {0,5}", j);
+				Stream.Write("\rScanlines remaining: {0,5}", j);
 				for (int i < image_width)
 				{
 					var pixel_color = scope Color(0.0, 0.0, 0.0);
 					for (int s < samples_per_pixel)
 					{
-						let u = (i + rand.NextDouble())/(image_width-1);
-						let v = (j + rand.NextDouble())/(image_height-1);
+						let u = (i + rand.NextDouble()) / (image_width-1);
+						let v = (j + rand.NextDouble()) / (image_height-1);
 						let r = cam.get_ray(u, v);
 						defer delete r;
 						*pixel_color += ray_color(r, world);
@@ -94,7 +92,7 @@ namespace RayTracingWeekend
 					write_color(ref imageData, *pixel_color, samples_per_pixel);
 				}
 			}
-			ErrStream.Write("\nDone.\n");
+			Stream.Write("\nDone.\n");
 			let fileName = "image.ppm";
 			System.IO.File.WriteAllText(fileName, imageData);
 		}
