@@ -12,12 +12,19 @@ namespace RayTracingWeekend
 			return degrees * Math.PI_d / 180;
 		}
 
-		static Color ray_color(Ray r, Hittable world)
+		static Color ray_color(Ray r, Hittable world, int depth)
 		{
 			var rec = hit_record();
+
+			// If we've exceeded the ray bounce limit, no more light is gathered.
+			if (depth <= 0)
+			    return Color(0,0,0);
+
 			if (world.hit(r, 0, Double.MaxValue, ref rec)) {
-				return 0.5 * (rec.normal + Color(1,1,1));
+				let target = rec.p + rec.normal + Vec3.random_in_unit_sphere();
+				return 0.5 * ray_color(scope Ray(rec.p, target - rec.p), world, depth-1);
 			}
+
 			Vec3 unit_direction = Vec3.unit_vector(r.direction);
 			let t = 0.5*(unit_direction.y + 1.0);
 			return (1.0-t)*(Color(1.0, 1.0, 1.0)) + t*(Color(0.5, 0.7, 1.0));
@@ -48,7 +55,8 @@ namespace RayTracingWeekend
 			let aspect_ratio = 16.0 / 9.0;
 			let image_width = 340;
 			let image_height = (int)(image_width / aspect_ratio);
-			let samples_per_pixel = 8;
+			let samples_per_pixel = 10;
+			let max_depth = 50;
 
 			// World
 			var world = new HittableList();
@@ -87,7 +95,7 @@ namespace RayTracingWeekend
 						let v = (j + rand.NextDouble()) / (image_height-1);
 						let r = cam.get_ray(u, v);
 						defer delete r;
-						*pixel_color += ray_color(r, world);
+						*pixel_color += ray_color(r, world, max_depth);
 					}
 					write_color(ref imageData, *pixel_color, samples_per_pixel);
 				}

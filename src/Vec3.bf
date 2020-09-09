@@ -5,6 +5,7 @@ namespace RayTracingWeekend
 	struct Vec3
 	{
 		public double[3] e;
+		private static Random rand = new Random() ~ delete _;
 
 		public this()
 		{
@@ -24,6 +25,31 @@ namespace RayTracingWeekend
 		    get { return e[key]; }
 			[Inline]
 			set mut { e[key] = value; }
+		}
+
+		[Inline]
+		public static Vec3 random()
+		{
+			return Vec3(rand.NextDouble(), rand.NextDouble(), rand.NextDouble());
+		}
+
+		[Inline]
+		public static Vec3 random(double min, double max)
+		{
+			let range = max - min;
+			return Vec3(rand.NextDouble()*range + min, rand.NextDouble()*range + min, rand.NextDouble()*range + min);
+		}
+
+		public static Vec3 random_in_unit_sphere()
+		{
+			while(true)
+			{
+				let p = random();
+				// keep trying if not within unit sphere but in unit cube
+				if (p.length_squared() >= 1) continue;
+				return p;
+			}
+			
 		}
 
 		[Inline]
