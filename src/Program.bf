@@ -20,7 +20,7 @@ namespace RayTracingWeekend
 			if (depth <= 0)
 			    return Color(0,0,0);
 
-			if (world.hit(r, 0, Double.MaxValue, ref rec)) {
+			if (world.hit(r, 0.0001, Double.MaxValue, ref rec)) {
 				let target = rec.p + rec.normal + Vec3.random_in_unit_sphere();
 				return 0.5 * ray_color(scope Ray(rec.p, target - rec.p), world, depth-1);
 			}
