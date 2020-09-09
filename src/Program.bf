@@ -27,7 +27,7 @@ namespace RayTracingWeekend
 
 			Vec3 unit_direction = Vec3.unit_vector(r.direction);
 			let t = 0.5*(unit_direction.y + 1.0);
-			return (1.0-t)*(Color(1.0, 1.0, 1.0)) + t*(Color(0.5, 0.7, 1.0));
+			return (1.0-t)*(Color(0.8, 0.8, 1.0)) + t*(Color(1.0, 0.7, 0.7));
 		}
 
 		static void write_color(ref String imageData, Color pixel_color, int samples_per_pixel)
