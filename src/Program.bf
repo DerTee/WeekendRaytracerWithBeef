@@ -38,9 +38,9 @@ namespace RayTracingWeekend
 
 			// Divide the color by the number of samples
 			let scale = 1.0 / samples_per_pixel;
-			r *= scale;
-			g *= scale;
-			b *= scale;
+			r = Math.Sqrt(scale * r);
+			g = Math.Sqrt(scale * g);
+			b = Math.Sqrt(scale * b);
 
 			imageData.AppendF("\n{} {} {}",
 				(int)(256 * Math.Clamp(r, 0.0, 0.999)),
