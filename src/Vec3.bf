@@ -40,6 +40,8 @@ namespace RayTracingWeekend
 			return Vec3(rand.NextDouble()*range + min, rand.NextDouble()*range + min, rand.NextDouble()*range + min);
 		}
 
+		// not used anymore, it's a faster but uglier version of random_unit_vector
+		// just keeping it for experiments
 		public static Vec3 random_in_unit_sphere()
 		{
 			while(true)
@@ -50,6 +52,15 @@ namespace RayTracingWeekend
 				return p;
 			}
 			
+		}
+
+		// used for true Lambertian shading
+		public static Vec3 random_unit_vector()
+		{
+			let a = rand.NextDouble()*2*Math.PI_d;
+			let z = rand.NextDoubleSigned();
+			let r = Math.Sqrt(1 - z*z);
+			return Vec3(r*Math.Cos(a), r*Math.Sin(a), z);
 		}
 
 		[Inline]
