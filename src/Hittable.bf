@@ -5,6 +5,7 @@ namespace RayTracingWeekend
 	struct hit_record {
 		public Point3 p;
 		public Vec3 normal;
+		public Material mat_ptr;
 		public double t;
 		public bool front_face;
 

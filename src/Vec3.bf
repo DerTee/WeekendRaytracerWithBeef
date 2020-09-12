@@ -75,6 +75,11 @@ namespace RayTracingWeekend
 				return -1*in_unit_sphere;
 		}
 
+		public static Vec3 reflect(Vec3 v, Vec3 n)
+		{
+			return v - 2*dot(v,n)*n;
+		}
+
 		[Inline]
 		public void operator +=(Vec3 rhs) mut
 		{

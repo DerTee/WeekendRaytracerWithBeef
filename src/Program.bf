@@ -12,7 +12,7 @@ namespace RayTracingWeekend
 			return degrees * Math.PI_d / 180;
 		}
 
-		static Color ray_color(Ray r, Hittable world, int depth)
+		static Color ray_color(ref Ray r, Hittable world, int depth)
 		{
 			var rec = hit_record();
 
@@ -21,10 +21,11 @@ namespace RayTracingWeekend
 			    return Color(0,0,0);
 
 			if (world.hit(r, 0.0001, Double.MaxValue, ref rec)) {
-				// let target = rec.p + rec.normal + Vec3.random_in_unit_sphere();
-				// let target = rec.p + Vec3.random_in_hemisphere(rec.normal);
-				let target = rec.p + rec.normal + Vec3.random_unit_vector();
-				return 0.5 * ray_color(scope Ray(rec.p, target - rec.p), world, depth-1);
+				var scattered = scope Ray();
+				var attenuation = Color();
+				if(rec.mat_ptr.scatter(ref r, rec, ref attenuation, ref scattered))
+					return attenuation * ray_color(ref scattered, world, depth-1);
+				return Color(0,0,0);
 			}
 
 			Vec3 unit_direction = Vec3.unit_vector(r.direction);
@@ -58,18 +59,30 @@ namespace RayTracingWeekend
 			let image_width = 340;
 			let image_height = (int)(image_width / aspect_ratio);
 			let samples_per_pixel = 10;
-			let max_depth = 50;
+			let max_depth = 5;
 
 			// World
 			var world = new HittableList();
-			var sphere1 = new Sphere(Point3(0,0,-1), 0.5);
-			world.add(sphere1);
-			var sphere2 = new Sphere(Point3(0,-100.5,-1), 100);
-			world.add(sphere2);
+
+			var material_ground = new Lambertian(Color(0.8, 0.8, 0.0));
+			var material_center = new Lambertian(Color(0.7, 0.3, 0.3));
+			var material_left = new Metal(Color(0.8, 0.8, 0.8));
+			var material_right = new Metal(Color(0.8, 0.6, 0.2));
+
+			var sphere_center = new Sphere(Point3(0,0,-1), 0.5, material_center);
+			var sphere_ground = new Sphere(Point3(0,-100.5,-1), 100, material_ground);
+			var sphere_left = new Sphere(Point3(-1,0,-1), 0.5, material_left);
+			var sphere_right = new Sphere(Point3(1,0,-1), 0.5, material_right);
+			world.add(sphere_center);
+			world.add(sphere_ground);
+			world.add(sphere_left);
+			world.add(sphere_right);
 			defer
 			{
-				delete sphere1;
-				delete sphere2;
+				delete material_ground;
+				delete material_center;
+				delete sphere_center;
+				delete sphere_ground;
 				delete world;
 			}
 
@@ -95,9 +108,9 @@ namespace RayTracingWeekend
 					{
 						let u = (i + rand.NextDouble()) / (image_width-1);
 						let v = (j + rand.NextDouble()) / (image_height-1);
-						let r = cam.get_ray(u, v);
+						var r = cam.get_ray(u, v);
 						defer delete r;
-						*pixel_color += ray_color(r, world, max_depth);
+						*pixel_color += ray_color(ref r, world, max_depth);
 					}
 					write_color(ref imageData, *pixel_color, samples_per_pixel);
 				}
