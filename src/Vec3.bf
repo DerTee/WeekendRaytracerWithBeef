@@ -40,6 +40,7 @@ namespace RayTracingWeekend
 			return Vec3(rand.NextDouble()*range + min, rand.NextDouble()*range + min, rand.NextDouble()*range + min);
 		}
 
+		// diffuse scatter method for fake Lambertian shading using ray within unit sphere
 		// not used anymore, it's a faster but uglier version of random_unit_vector
 		// just keeping it for experiments
 		public static Vec3 random_in_unit_sphere()
@@ -54,13 +55,24 @@ namespace RayTracingWeekend
 			
 		}
 
-		// used for true Lambertian shading
+		// diffuse scatter method Lambertian shading
+		// uses ray 
 		public static Vec3 random_unit_vector()
 		{
 			let a = rand.NextDouble()*2*Math.PI_d;
-			let z = rand.NextDoubleSigned();
-			let r = Math.Sqrt(1 - z*z);
+			let z = rand.NextDoubleSigned(); // -1 to +1
+			let r = Math.Sqrt(1 - z*z); // radius
 			return Vec3(r*Math.Cos(a), r*Math.Sin(a), z);
+		}
+
+		// diffuse scatter method of old times before adopting Lambertian
+		public static Vec3 random_in_hemisphere(Vec3 normal)
+		{
+			let in_unit_sphere = random_in_unit_sphere();
+			if (Vec3.dot(in_unit_sphere, normal) > 0.0) // in the same hemisphere as the normal
+				return in_unit_sphere;
+			else
+				return -1*in_unit_sphere;
 		}
 
 		[Inline]
