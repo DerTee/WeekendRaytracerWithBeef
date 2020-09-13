@@ -19,7 +19,7 @@ namespace RayTracingWeekend
 			// let scatter_direction = rec.normal + Vec3.random_in_unit_sphere();
 			// let scatter_direction = Vec3.random_in_hemisphere(rec.normal);
 			let scatter_direction = rec.normal + Vec3.random_unit_vector();
-			scattered = new Ray(rec.p, scatter_direction);
+			scattered = Ray(rec.p, scatter_direction);
 			attenuation = albedo;
 			return true;
 		}
@@ -37,7 +37,7 @@ namespace RayTracingWeekend
 		public override bool scatter(ref Ray r_in, hit_record rec, ref Color attenuation, ref Ray scattered)
 		{
 			let reflected = Vec3.reflect(Vec3.unit_vector(r_in.direction), rec.normal);
-			scattered = scope Ray(rec.p, reflected);
+			scattered = Ray(rec.p, reflected);
 			attenuation = albedo;
 			return true;
 		}

@@ -1,12 +1,14 @@
 namespace RayTracingWeekend
 {
-	class Ray
+	struct Ray
 	{
 		public Point3 orig;
 		public Vec3 dir;
 
 		public this()
 		{
+			orig = Point3();
+			dir = Vec3();
 		}
 
 		public this(Point3 origin, Vec3 direction)

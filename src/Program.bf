@@ -21,7 +21,7 @@ namespace RayTracingWeekend
 			    return Color(0,0,0);
 
 			if (world.hit(r, 0.0001, Double.MaxValue, ref rec)) {
-				var scattered = scope Ray();
+				var scattered = Ray();
 				var attenuation = Color();
 				if(rec.mat_ptr.scatter(ref r, rec, ref attenuation, ref scattered))
 					return attenuation * ray_color(ref scattered, world, depth-1);
@@ -81,8 +81,12 @@ namespace RayTracingWeekend
 			{
 				delete material_ground;
 				delete material_center;
+				delete material_left;
+				delete material_right;
 				delete sphere_center;
 				delete sphere_ground;
+				delete sphere_left;
+				delete sphere_right;
 				delete world;
 			}
 
@@ -109,7 +113,7 @@ namespace RayTracingWeekend
 						let u = (i + rand.NextDouble()) / (image_width-1);
 						let v = (j + rand.NextDouble()) / (image_height-1);
 						var r = cam.get_ray(u, v);
-						defer delete r;
+						// defer delete r;
 						*pixel_color += ray_color(ref r, world, max_depth);
 					}
 					write_color(ref imageData, *pixel_color, samples_per_pixel);
