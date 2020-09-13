@@ -80,6 +80,14 @@ namespace RayTracingWeekend
 			return v - 2*dot(v,n)*n;
 		}
 
+		public static Vec3 refract(Vec3 uv, Vec3 n, double etai_over_etat)
+		{
+			let cos_theta = Vec3.dot(-1*uv, n);
+			let r_out_perp = etai_over_etat * (uv + cos_theta*n);
+			let r_out_parallel = -1*Math.Sqrt(Math.Abs(1.0 - r_out_perp.length_squared())) * n;
+			return r_out_perp + r_out_parallel;
+		}
+
 		[Inline]
 		public void operator +=(Vec3 rhs) mut
 		{
