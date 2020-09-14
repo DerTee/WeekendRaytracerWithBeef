@@ -50,6 +50,7 @@ namespace RayTracingWeekend
 	class Dielectric : Material
 	{
 		public double ref_idx;
+		private static Random rand = new Random() ~ delete _;
 
 		public this(double i)
 		{
@@ -71,9 +72,24 @@ namespace RayTracingWeekend
 				scattered = Ray(rec.p, reflected);
 				return true;
 			}
+			let reflect_prob = schlick(cos_theta, etai_over_etat);
+			if(rand.NextDouble() < reflect_prob)
+			{
+				let reflected = Vec3.reflect(unit_direction, rec.normal);
+				scattered = Ray(rec.p, reflected);
+				return true;
+			}
+
 			let refracted = Vec3.refract(unit_direction, rec.normal, etai_over_etat);
 			scattered = Ray(rec.p, refracted);
 			return true;
+		}
+
+		public double schlick(double cosine, double ref_idx)
+		{
+			var r0 = (1-ref_idx) / (1+ref_idx);
+			r0 = r0*r0;
+			return r0 + (1-r0)*Math.Pow((1 - cosine), 5);
 		}
 	}
 }
