@@ -63,34 +63,23 @@ namespace RayTracingWeekend
 
 			// World
 			var world = new HittableList();
+			defer delete world;
 
-			var material_ground = new Lambertian(Color(0.8, 0.8, 0.0));
+			var material_ground = scope Lambertian(Color(0.8, 0.8, 0.0));
 			//var material_center = new Lambertian(Color(0.7, 0.3, 0.3));
-			var material_center = new Dielectric(1.5);
-			//var material_left = new Metal(Color(0.8, 0.8, 0.8), 0.3);
-			var material_left = new Dielectric(1.5);
-			var material_right = new Metal(Color(0.8, 0.6, 0.2), 1.0);
+			var material_center = scope Dielectric(1.5);
+			//var material_left = scope Metal(Color(0.8, 0.8, 0.8), 0.3);
+			var material_left = scope Dielectric(1.5);
+			var material_right = scope Metal(Color(0.8, 0.6, 0.2), 1.0);
 
-			var sphere_center = new Sphere(Point3(0,0,-1), 0.5, material_center);
-			var sphere_ground = new Sphere(Point3(0,-100.5,-1), 100, material_ground);
-			var sphere_left = new Sphere(Point3(-1,0,-1), 0.5, material_left);
-			var sphere_right = new Sphere(Point3(1,0,-1), 0.5, material_right);
+			var sphere_center = scope Sphere(Point3(0,0,-1), 0.5, material_center);
+			var sphere_ground = scope Sphere(Point3(0,-100.5,-1), 100, material_ground);
+			var sphere_left = scope Sphere(Point3(-1,0,-1), 0.5, material_left);
+			var sphere_right = scope Sphere(Point3(1,0,-1), 0.5, material_right);
 			world.add(sphere_center);
 			world.add(sphere_ground);
 			world.add(sphere_left);
 			world.add(sphere_right);
-			defer
-			{
-				delete material_ground;
-				delete material_center;
-				delete material_left;
-				delete material_right;
-				delete sphere_center;
-				delete sphere_ground;
-				delete sphere_left;
-				delete sphere_right;
-				delete world;
-			}
 
 			// Render
 			var imageData = new String();
