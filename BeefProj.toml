@@ -4,3 +4,8 @@ FileVersion = 1
 Name = "RayTracingInOneWeekendWithBeef"
 StartupObject = "RayTracingWeekend.Program"
 DefaultNamespace = "RayTracingWeekend"
+
+[Configs.Release.Win64]
+OptimizationLevel = "O3"
+VectorizeLoops = true
+VectorizeSLP = true
