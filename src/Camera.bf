@@ -1,3 +1,5 @@
+using System;
+
 namespace RayTracingWeekend
 {
 	class Camera
@@ -7,11 +9,13 @@ namespace RayTracingWeekend
 		Vec3 horizontal;
 		Vec3 vertical;
 
-		public this()
+		public this(double vfov, double aspect_ratio)
 		{
-			let aspect_ratio = 16.0 / 9.0;
-			let viewport_height = 2.0;
+			let theta = Program.degrees_to_radians(vfov);
+			let h = Math.Tan(theta/2);
+			let viewport_height = 2.0 * h;
 			let viewport_width = aspect_ratio * viewport_height;
+
 			let focal_length = 1.0;
 
 			origin = Point3(0, 0, 0);
