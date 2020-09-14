@@ -1,3 +1,5 @@
+using System;
+
 namespace RayTracingWeekend
 {
 	abstract class Material
@@ -60,6 +62,15 @@ namespace RayTracingWeekend
 			let etai_over_etat = rec.front_face ? (1.0 / ref_idx) : ref_idx;
 
 			let unit_direction = Vec3.unit_vector(r_in.direction);
+
+			let cos_theta = Math.Min(Vec3.dot(-1*unit_direction, rec.normal), 1.0);
+			let sin_theta = Math.Sqrt(1.0 - cos_theta*cos_theta);
+			if(etai_over_etat * sin_theta > 1.0)
+			{
+				let reflected = Vec3.reflect(unit_direction, rec.normal);
+				scattered = Ray(rec.p, reflected);
+				return true;
+			}
 			let refracted = Vec3.refract(unit_direction, rec.normal, etai_over_etat);
 			scattered = Ray(rec.p, refracted);
 			return true;
