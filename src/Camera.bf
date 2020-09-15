@@ -9,24 +9,26 @@ namespace RayTracingWeekend
 		Vec3 horizontal;
 		Vec3 vertical;
 
-		public this(double vfov, double aspect_ratio)
+		public this(Point3 lookfrom, Point3 lookat, Vec3 vup, double vfov, double aspect_ratio)
 		{
 			let theta = Program.degrees_to_radians(vfov);
 			let h = Math.Tan(theta/2);
 			let viewport_height = 2.0 * h;
 			let viewport_width = aspect_ratio * viewport_height;
 
-			let focal_length = 1.0;
+			let w = Vec3.unit_vector(lookfrom -lookat);
+			let u = Vec3.unit_vector(Vec3.cross(vup, w));
+			let v = Vec3.cross(w, u);
 
-			origin = Point3(0, 0, 0);
-			horizontal = Vec3(viewport_width, 0, 0);
-			vertical = Vec3(0, viewport_height, 0);
-			lower_left_corner = origin - horizontal/2 - vertical/2 - Vec3(0, 0, focal_length);
+			origin = lookfrom;
+			horizontal = viewport_width * u;
+			vertical = viewport_height * v;
+			lower_left_corner = origin - horizontal/2 - vertical/2 - w;
 		}
 
-		public Ray get_ray(double u, double v)
+		public Ray get_ray(double s, double t)
 		{
-			return Ray(origin, lower_left_corner + u*horizontal + v*vertical - origin);
+			return Ray(origin, lower_left_corner + s*horizontal + t*vertical - origin);
 		}
 	}
 }
