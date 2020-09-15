@@ -30,7 +30,7 @@ namespace RayTracingWeekend
 
 			Vec3 unit_direction = Vec3.unit_vector(r.direction);
 			let t = 0.5*(unit_direction.y + 1.0);
-			return (1.0-t)*(Color(0.8, 0.8, 1.0)) + t*(Color(1.0, 0.7, 0.7));
+			return (1.0-t)*(Color(0.9, 0.9, 0.9)) + t*(Color(0.7, 0.8, 0.9));
 		}
 
 		static void write_color(ref String imageData, Color pixel_color, int samples_per_pixel)
@@ -83,8 +83,13 @@ namespace RayTracingWeekend
 			var Stream = System.Console.Error;
 			imageData.AppendF("P3\n{} {}\n255\n", image_width, image_height);
 
+			Vec3 lookfrom = Point3(-2,2,1);
+			Vec3 lookat = Point3(0,0,-1);
+			let dist_to_focus = (lookfrom-lookat).length();
+			let aperture = 2.0;
+
 			// Camera
-			var cam = scope Camera(Point3(-2,2,1), Point3(0,0,-1), Vec3(0,1,0), 90.0, aspect_ratio);
+			var cam = scope Camera(lookfrom, lookat, Vec3(0,1,0), 20.0, aspect_ratio, aperture, dist_to_focus);
 
 			var rand = scope Random();
 

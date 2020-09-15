@@ -75,6 +75,16 @@ namespace RayTracingWeekend
 				return -1*in_unit_sphere;
 		}
 
+		public static Vec3 random_in_unit_disk()
+		{
+			while(true)
+			{
+				let p = Vec3(rand.NextDoubleSigned(), rand.NextDoubleSigned(), 0);
+				if (p.length_squared() >= 1) continue;
+				return p;
+			}
+		}
+
 		public static Vec3 reflect(Vec3 v, Vec3 n)
 		{
 			return v - 2*dot(v,n)*n;
