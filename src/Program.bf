@@ -52,29 +52,64 @@ namespace RayTracingWeekend
 				);
 		}
 
+		static HittableList random_scene()
+		{
+			let world = new HittableList();
+			let rand = new Random();
+			defer delete rand;
+
+			var material_ground = new Lambertian(Color(0.8, 0.8, 0.0));
+			world.add(new Sphere(Point3(0, -1000, 0), 1000, material_ground));
+
+			for (int a = -11; a < 11; a++) {
+				for (int b = -11; b < 11; b++) {
+					let choose_mat = rand.NextDouble();
+					let center = Point3(a + 0.9*rand.NextDouble(), 0.2, b + 0.9*rand.NextDouble());
+
+					if ((center - Point3(4, 0.2, 0)).length() > 0.9)
+					{
+						if (choose_mat < 0.8) {
+							// diffuse
+							let albedo = Color.random() * Color.random();
+							let sphere_material = new Lambertian(albedo);
+							world.add(new Sphere(center, 0.2, sphere_material));
+						} else if (choose_mat < 0.95) {
+							// metal
+							let albedo = Color.random(0.5, 1);
+							let fuzz = rand.NextDouble()*0.5;
+							let sphere_material = new Metal(albedo, fuzz);
+							world.add(new Sphere(center, 0.2, sphere_material));
+						} else {
+							// glass
+							let sphere_material = new Dielectric(1.5);
+							world.add(new Sphere(center, 0.2, sphere_material));
+						}
+					}
+				}
+			}
+
+			let material1 = new Dielectric(1.5);
+			world.add(new Sphere(Point3(0, 1, 0), 1.0, material1));
+			let material2 = new Lambertian(Color(0.4, 0.2, 0.1));
+			world.add(new Sphere(Point3(-4, 1, 0), 1.0, material2));
+			let material3 = new Metal(Color(0.7, 0.6, 0.5), 0.0);
+			world.add(new Sphere(Point3(4, 1, 0), 1.0, material3));
+
+			return world;
+		}
+
 		static void Main()
 		{
 			// Image
-			let aspect_ratio = 16.0 / 9.0;
-			let image_width = 640;
+			let aspect_ratio = 3.0 / 2.0;
+			let image_width = 1200;
 			let image_height = (int)(image_width / aspect_ratio);
-			let samples_per_pixel = 750;
+			let samples_per_pixel = 50;
 			let max_depth = 50;
 
 			// World
-			var world = new HittableList();
+			var world = random_scene();
 			defer delete world;
-
-			var material_ground = scope Lambertian(Color(0.8, 0.8, 0.0));
-			var material_center = scope Lambertian(Color(0.1,0.2,0.5));
-			var material_left =  scope Dielectric(1.5);
-			var material_right = scope Metal(Color(0.8, 0.6, 0.2), 0.0);
-
-			world.add(scope Sphere(Point3( 0,   0,   -1),   0.5, material_center));
-			world.add(scope Sphere(Point3( 0,-100.5, -1), 100,   material_ground));
-			world.add(scope Sphere(Point3(-1,   0,   -1),   0.5, material_left));
-			world.add(scope Sphere(Point3(-1,   0,   -1),  -0.45, material_left));
-			world.add(scope Sphere(Point3(1,    0,   -1),   0.5, material_right));
 
 			// Render
 			var imageData = new String();
@@ -83,13 +118,14 @@ namespace RayTracingWeekend
 			var Stream = System.Console.Error;
 			imageData.AppendF("P3\n{} {}\n255\n", image_width, image_height);
 
-			Vec3 lookfrom = Point3(-2,2,1);
-			Vec3 lookat = Point3(0,0,-1);
-			let dist_to_focus = (lookfrom-lookat).length();
-			let aperture = 2.0;
+			let lookfrom = Point3(13,2,3);
+			let lookat = Point3(0,0,0);
+			let vup = Vec3(0,1,0);
+			let dist_to_focus = 10;
+			let aperture = 0.1;
 
 			// Camera
-			var cam = scope Camera(lookfrom, lookat, Vec3(0,1,0), 20.0, aspect_ratio, aperture, dist_to_focus);
+			var cam = scope Camera(lookfrom, lookat, vup, 20.0, aspect_ratio, aperture, dist_to_focus);
 
 			var rand = scope Random();
 
@@ -110,6 +146,14 @@ namespace RayTracingWeekend
 					write_color(ref imageData, *pixel_color, samples_per_pixel);
 				}
 			}
+
+			for (var obj in ref world.objects) {
+				var sphere = (Sphere)obj;
+				delete sphere.mat_ptr;
+				delete sphere;
+			}
+			world.clear();
+
 			Stream.Write("\nDone.\n");
 			let fileName = "image.ppm";
 			System.IO.File.WriteAllText(fileName, imageData);
