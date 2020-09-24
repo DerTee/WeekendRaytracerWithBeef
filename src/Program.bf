@@ -92,6 +92,8 @@ namespace RayTracingWeekend
 
 		static void Main()
 		{
+			var start_time = DateTime.Now;
+			
 			// Image
 			let aspect_ratio = 3.0 / 2.0;
 			let image_width = 1200;
@@ -146,8 +148,9 @@ namespace RayTracingWeekend
 				delete sphere;
 			}
 			world.clear();
+			
+			Stream.Write(scope String("\nDone.")..AppendF(" Render time: {}\n", DateTime.Now - start_time));
 
-			Stream.Write("\nDone.\n");
 			let fileName = "image.ppm";
 			System.IO.File.WriteAllText(fileName, imageData);
 		}
