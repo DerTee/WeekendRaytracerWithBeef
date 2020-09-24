@@ -109,7 +109,7 @@ namespace RayTracingWeekend
 			var imageData = new String();
 			defer delete imageData;
 
-			var Stream = System.Console.Error;
+			var Stream = System.Console.Out;
 			imageData.AppendF("P3\n{} {}\n255\n", image_width, image_height);
 
 			let lookfrom = Point3(13,2,3);
