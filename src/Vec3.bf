@@ -52,7 +52,6 @@ namespace RayTracingWeekend
 				if (p.length_squared() >= 1) continue;
 				return p;
 			}
-			
 		}
 
 		// diffuse scatter method Lambertian shading

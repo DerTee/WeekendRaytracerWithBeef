@@ -4,14 +4,6 @@ namespace RayTracingWeekend
 {
 	class Program
 	{
-		// Utilities
-		//  wrong place, but there is no right place yet
-		[Inline]
-		public static double degrees_to_radians(double degrees)
-		{
-			return degrees * Math.PI_d / 180;
-		}
-
 		static Color ray_color(ref Ray r, Hittable world, int depth)
 		{
 			var rec = hit_record();
@@ -147,6 +139,7 @@ namespace RayTracingWeekend
 				}
 			}
 
+			// FIXME there's definitely a better way to deallocate the scene objects
 			for (var obj in ref world.objects) {
 				var sphere = (Sphere)obj;
 				delete sphere.mat_ptr;

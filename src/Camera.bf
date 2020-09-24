@@ -1,4 +1,5 @@
 using System;
+using RayTracingWeekend.Utils;
 
 namespace RayTracingWeekend
 {
@@ -13,7 +14,7 @@ namespace RayTracingWeekend
 
 		public this(Point3 lookfrom, Point3 lookat, Vec3 vup, double vfov, double aspect_ratio, double aperture, double focus_dist)
 		{
-			let theta = Program.degrees_to_radians(vfov);
+			let theta = degrees_to_radians(vfov);
 			let h = Math.Tan(theta/2);
 			let viewport_height = 2.0 * h;
 			let viewport_width = aspect_ratio * viewport_height;
