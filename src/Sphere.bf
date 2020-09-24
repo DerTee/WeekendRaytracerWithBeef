@@ -8,7 +8,7 @@ namespace RayTracingWeekend
 		public double radius;
 		public Material mat_ptr;
 
-		public this() {}
+		public this() { }
 		public this(Point3 cen, double r, Material m)
 		{
 			radius = r;
@@ -21,14 +21,16 @@ namespace RayTracingWeekend
 			Vec3 oc = r.origin - center;
 			let a = r.direction.length_squared();
 			let half_b = Vec3.dot(oc, r.direction);
-			let c = oc.length_squared() - radius*radius;
-			let discriminant = half_b*half_b - a*c;
+			let c = oc.length_squared() - radius * radius;
+			let discriminant = half_b * half_b - a * c;
 
-			if (discriminant > 0) {
+			if (discriminant > 0)
+			{
 				let root = Math.Sqrt(discriminant);
 
 				var temp = (-half_b - root) / a;
-				if (temp < t_max && temp > t_min) {
+				if (temp < t_max && temp > t_min)
+				{
 					rec.t = temp;
 					rec.p = r.at(rec.t);
 					Vec3 outward_normal = (rec.p - center) / radius;
@@ -38,7 +40,8 @@ namespace RayTracingWeekend
 				}
 
 				temp = (-half_b + root) / a;
-				if(temp < t_max && temp > t_min) {
+				if (temp < t_max && temp > t_min)
+				{
 					rec.t = temp;
 					rec.p = r.at(rec.t);
 					Vec3 outward_normal = (rec.p - center) / radius;

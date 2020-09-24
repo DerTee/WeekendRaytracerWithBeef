@@ -29,7 +29,7 @@ namespace RayTracingWeekend
 
 		public Point3 at(double t)
 		{
-			return orig + t*dir;
+			return orig + t * dir;
 		}
 	}
 }

@@ -41,7 +41,7 @@ namespace RayTracingWeekend
 		public override bool scatter(ref Ray r_in, hit_record rec, ref Color attenuation, ref Ray scattered)
 		{
 			let reflected = Vec3.reflect(Vec3.unit_vector(r_in.direction), rec.normal);
-			scattered = Ray(rec.p, reflected + fuzz*Vec3.random_in_unit_sphere());
+			scattered = Ray(rec.p, reflected + fuzz * Vec3.random_in_unit_sphere());
 			attenuation = albedo;
 			return true;
 		}
@@ -64,16 +64,16 @@ namespace RayTracingWeekend
 
 			let unit_direction = Vec3.unit_vector(r_in.direction);
 
-			let cos_theta = Math.Min(Vec3.dot(-1*unit_direction, rec.normal), 1.0);
-			let sin_theta = Math.Sqrt(1.0 - cos_theta*cos_theta);
-			if(etai_over_etat * sin_theta > 1.0)
+			let cos_theta = Math.Min(Vec3.dot(-1 * unit_direction, rec.normal), 1.0);
+			let sin_theta = Math.Sqrt(1.0 - cos_theta * cos_theta);
+			if (etai_over_etat * sin_theta > 1.0)
 			{
 				let reflected = Vec3.reflect(unit_direction, rec.normal);
 				scattered = Ray(rec.p, reflected);
 				return true;
 			}
 			let reflect_prob = schlick(cos_theta, etai_over_etat);
-			if(rand.NextDouble() < reflect_prob)
+			if (rand.NextDouble() < reflect_prob)
 			{
 				let reflected = Vec3.reflect(unit_direction, rec.normal);
 				scattered = Ray(rec.p, reflected);
@@ -87,9 +87,9 @@ namespace RayTracingWeekend
 
 		public double schlick(double cosine, double ref_idx)
 		{
-			var r0 = (1-ref_idx) / (1+ref_idx);
-			r0 = r0*r0;
-			return r0 + (1-r0)*Math.Pow((1 - cosine), 5);
+			var r0 = (1 - ref_idx) / (1 + ref_idx);
+			r0 = r0 * r0;
+			return r0 + (1 - r0) * Math.Pow((1 - cosine), 5);
 		}
 	}
 }

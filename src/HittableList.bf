@@ -6,7 +6,7 @@ namespace RayTracingWeekend
 	{
 		public var objects = new List<Hittable>() ~ delete _;
 
-		public this() {}
+		public this() { }
 		public this(Hittable object) { add(object); }
 
 		public void clear() { objects.Clear(); }
@@ -18,8 +18,10 @@ namespace RayTracingWeekend
 			var hit_anything = false;
 			var closest_so_far = t_max;
 
-			for (var object in objects) {
-				if (object.hit(r, t_min, closest_so_far, ref temp_rec)) {
+			for (var object in objects)
+			{
+				if (object.hit(r, t_min, closest_so_far, ref temp_rec))
+				{
 					hit_anything = true;
 					closest_so_far = temp_rec.t;
 					rec = temp_rec;

@@ -22,7 +22,7 @@ namespace RayTracingWeekend
 		public double this[int key]
 		{
 			[Inline]
-		    get { return e[key]; }
+			get { return e[key]; }
 			[Inline]
 			set mut { e[key] = value; }
 		}

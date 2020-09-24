@@ -2,7 +2,8 @@ using System;
 
 namespace RayTracingWeekend
 {
-	struct hit_record {
+	struct hit_record
+	{
 		public Point3 p;
 		public Vec3 normal;
 		public Material mat_ptr;
@@ -13,7 +14,7 @@ namespace RayTracingWeekend
 		public void set_face_normal(Ray r, Vec3 outward_normal) mut
 		{
 			front_face = Vec3.dot(r.direction, outward_normal) < 0;
-			normal = front_face ? outward_normal : outward_normal*(-1);
+			normal = front_face ? outward_normal : outward_normal * (-1);
 		}
 	}
 
