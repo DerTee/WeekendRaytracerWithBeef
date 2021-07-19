@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 
 namespace RayTracingWeekend
 {
@@ -156,10 +157,17 @@ namespace RayTracingWeekend
 			}
 			world.clear();
 
-			Stream.Write(scope String("\nDone.")..AppendF(" Render time: {}\n", DateTime.Now - start_time));
+			Stream.Write(scope String()..AppendF("\nDone. Render time: {}\n", DateTime.Now - start_time));
 
 			let fileName = "image.ppm";
 			System.IO.File.WriteAllText(fileName, imageData);
+			Stream.Write(scope String()..AppendF("\nWrote image to file '{}'\n"
+				+ "Trying to open file with associated image viewer and exiting\n", fileName));
+
+			ProcessStartInfo psi = scope ProcessStartInfo();
+			psi.SetFileName(fileName);
+			var process = scope SpawnedProcess();
+			process.Start(psi);
 		}
 	}
 }
