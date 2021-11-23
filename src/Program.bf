@@ -117,7 +117,7 @@ namespace RayTracingWeekend
 			defer delete imageData;
 
 			var Stream = System.Console.Out;
-			imageData.AppendF("P3\n{} {}\n255\n", image_width, image_height);
+			imageData.AppendF($"P3\n{image_width} {image_height}\n255\n");
 
 			let lookfrom = Point3(13, 2, 3);
 			let lookat = Point3(0, 0, 0);
@@ -157,14 +157,17 @@ namespace RayTracingWeekend
 			}
 			world.clear();
 
-			Stream.Write(scope String()..AppendF("\nDone. Render time: {}\n", DateTime.Now - start_time));
+			Stream.Write(scope $"\nDone. Render time: {DateTime.Now - start_time}\n");
 
 			let fileName = "image.ppm";
 			System.IO.File.WriteAllText(fileName, imageData);
-			Stream.Write(scope String()..AppendF("\nWrote image to file '{}'\n"
-				+ "Trying to open file with associated image viewer and exiting\n", fileName));
+			Stream.Write(scope
+				$"""
+				Wrote image to file '{fileName}'
+				Trying to open file with associated image viewer and exiting
+				""");
 
-			ProcessStartInfo psi = scope ProcessStartInfo();
+			var psi = scope ProcessStartInfo();
 			psi.SetFileName(fileName);
 			var process = scope SpawnedProcess();
 			process.Start(psi);
